@@ -1,0 +1,7 @@
+[package]
+name = "som-tsp"
+version = "0.1.0"
+authors = ["Diego Vicente <diegovicente@protonmail.com>"]
+
+[dependencies]
+tsplib = "0.1.0"
