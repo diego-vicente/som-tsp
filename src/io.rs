@@ -10,7 +10,7 @@ pub struct City {
 }
 
 /// Read a file containing the information of a map with cities.
-pub fn read_cities(path: String) -> Result<Vec<City>, String> {
+pub fn read_cities(path: String) -> Vec<City> {
     let file = File::open(path).unwrap();
     let raw_data = tsplib::parse(BufReader::new(file));
     let triples = match raw_data.unwrap().node_coord {
@@ -35,5 +35,5 @@ pub fn read_cities(path: String) -> Result<Vec<City>, String> {
         })
         .collect();
 
-    return Ok(cities);
+    return cities;
 }
