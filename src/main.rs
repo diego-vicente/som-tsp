@@ -1,4 +1,5 @@
 pub mod io;
+pub mod distances;
 pub mod types;
 
 fn main() {
