@@ -7,7 +7,7 @@ fn main() {
 
     println!("Problem read: {}", problem.name);
     for city in problem.cities.iter() {
-        println!("City #{} at ({}, {})", city.id, city.x, city.y)
+        println!("City #{:03} at ({}, {})", city.id, city.x, city.y)
     }
 
     println!(
