@@ -14,14 +14,9 @@ pub fn read_cities(path: String) -> Vec<City> {
     let file = File::open(path).unwrap();
     let raw_data = tsplib::parse(BufReader::new(file));
     let triples = match raw_data.unwrap().node_coord {
-        Some(data) => {
-            // TODO: Allow for three dimensional TSP?
-            match data {
-                Two(cities) => cities,
-                _ => panic!("Number of dimensions not supported"),
-            }
-        }
-        None => panic!("No cities found in the given file"),
+        Some(Two(cities)) => cities,
+        // TODO: Accept 3 dimensional problems?
+        _ => panic!("No adequate cities found in the given file"),
     };
 
     let cities = triples
