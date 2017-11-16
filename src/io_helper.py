@@ -38,4 +38,16 @@ def read_tsp(filename):
             nrows=dimension
         )
 
+        # cities.set_index('city', inplace=True)
+
         return cities
+
+def normalize(positions):
+    """
+    Return the normalized version of a given vector of points.
+
+    For a given array of n-dimensions, normalize each dimension by removing the
+    initial offset and normalizing the points in a proportional [0,1] interval.
+    """
+    return positions.apply(lambda c: (c - c.min()) / (c.max() - c.min()))
+
