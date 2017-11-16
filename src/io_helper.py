@@ -2,6 +2,12 @@ import pandas as pd
 import numpy as np
 
 def read_tsp(filename):
+    """
+    Read a file in .tsp format into a pandas DataFrame
+
+    The .tsp files can be found in the TSPLIB project. Currently, the library
+    only considers the possibility of a 2D map.
+    """
     with open(filename) as f:
         node_coord_start = None
         dimension = None
