@@ -2,15 +2,16 @@ import numpy as np
 
 from io_helper import read_tsp, normalize
 from neuron import generate_network
+from plot import plot_tsp
 
 def main():
     problem = read_tsp('assets/qa194.tsp')
 
-    route = som(problem[:10], 100)
+    route = som(problem[:10], 500)
 
     return
 
-def som(problem, iterations, learning_rate=0.2):
+def som(problem, iterations, learning_rate=0.7):
     """Solve the TSP using a Self-Organizing Map."""
 
     # Obtain the normalized set of cities (w/ coord in [0,1])
@@ -18,9 +19,10 @@ def som(problem, iterations, learning_rate=0.2):
     cities[['x', 'y']] = normalize(cities[['x', 'y']])
 
     # Generate an adequate population of neurons: TODO! add n as parameter
-    population = generate_network(cities.shape[0] * 6)
+    population = generate_network(cities.shape[0] * 3)
 
     print(population)
+    plot_tsp(cities, population, 'diagrams/before.png')
 
     for i in range(iterations):
         city = cities.sample(1)[['x', 'y']].values
@@ -32,6 +34,7 @@ def som(problem, iterations, learning_rate=0.2):
         # print(population[winner_idx])
 
     print(population)
+    plot_tsp(cities, population, 'diagrams/after.png')
 
 def select_winner(population, city):
     """Return the index of the closest neuron to a given city."""
