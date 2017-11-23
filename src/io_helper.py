@@ -50,4 +50,3 @@ def normalize(positions):
     initial offset and normalizing the points in a proportional [0,1] interval.
     """
     return positions.apply(lambda c: (c - c.min()) / (c.max() - c.min()))
-
