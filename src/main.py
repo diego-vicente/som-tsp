@@ -24,7 +24,6 @@ def som(problem, iterations, learning_rate=0.7):
     # Generate an adequate population of neurons:
     population = generate_network(n)
 
-    print(population)
     plot_tsp(cities, population, 'diagrams/before.png')
 
     for i in range(iterations):
@@ -39,8 +38,10 @@ def som(problem, iterations, learning_rate=0.7):
         n = n * 0.999
         if not i % 500:
             plot_tsp(cities, population, 'diagrams/{}.png'.format(i))
+        if n < 1:
+            print('Radius has completely decayed, finishing execution at {} iterations'.format(i))
+            break
 
-    print(population)
     plot_tsp(cities, population, 'diagrams/after.png')
 
 def select_winner(population, city):
@@ -59,8 +60,8 @@ def get_neighbourhood(center, radix, domain):
     """Get the range neighbourhood of given radix around a center index."""
 
     # Impose an upper bound on the radix to prevent NaN and blocks
-    if radix < 0.0001:
-        radix = 0.0001
+    if radix < 1:
+        radix = 1
 
     # Compute the circular network distance to the center
     deltas = np.absolute(center - np.arange(domain))
