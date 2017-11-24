@@ -3,7 +3,16 @@ import numpy as np
 
 def plot_tsp(cities, neurons, name):
     """Plot a graphical representation of the problem"""
-    plt.scatter(cities['x'], cities['y'], color='red', s=10)
-    plt.plot(neurons[:,0], neurons[:,1], 'r.', ls='-', color='green')
-    plt.savefig(name)
+    fig = plt.figure(figsize=(5, 5), frameon = False)
+    axis = fig.add_axes([0,0,1,1])
+
+    axis.set_xlim([1.1,-.1])
+    axis.set_ylim([1.1,-.1])
+    axis.set_aspect('equal', adjustable='datalim')
+    plt.axis('off')
+
+    axis.scatter(cities['x'], cities['y'], color='red', s=4)
+    axis.plot(neurons[:,0], neurons[:,1], 'r.', ls='-', color='#0063ba', markersize=2)
+
+    plt.savefig(name, bbox_inches='tight', pad_inches=0, dpi=200)
     plt.clf()

@@ -32,7 +32,7 @@ def read_tsp(filename):
             f,
             skiprows=node_coord_start + 1,
             sep=' ',
-            names=['city', 'x', 'y'],
+            names=['city', 'y', 'x'],
             dtype={'city': str, 'x': np.float64, 'y': np.float64},
             header=None,
             nrows=dimension
