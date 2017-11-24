@@ -27,13 +27,14 @@ def som(problem, iterations, learning_rate=0.7):
     plot_tsp(cities, population, 'diagrams/before.png')
 
     for i in range(iterations):
+        # Choose a random city
         city = cities.sample(1)[['x', 'y']].values
         winner_idx = select_winner(population, city)
-        # print(population[winner_idx])
+        # Generate a filter that applies changes to the winner's neighbourhood
         neighbourhood = get_neighbourhood(winner_idx, n//10, population.shape[0])
-        # print(neighbourhood)
+        # Update the network's weights (closer to the city)
         population += neighbourhood[:,np.newaxis] * learning_rate * (city - population)
-        # print(population[winner_idx])
+        # Decay the variables
         learning_rate = learning_rate * 0.9999
         n = n * 0.999
         if not i % 500:
