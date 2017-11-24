@@ -1,7 +1,7 @@
 import numpy as np
 
 from io_helper import read_tsp, normalize
-from neuron import generate_network
+from neuron import generate_network, get_neighborhood, select_winner
 from plot import plot_tsp
 
 def main():
@@ -45,31 +45,6 @@ def som(problem, iterations, learning_rate=0.7):
 
     plot_tsp(cities, population, 'diagrams/after.png')
 
-def select_winner(population, city):
-    """Return the index of the closest neuron to a given city."""
-    return euclidean_distance(population, city).argmin()
-
-def euclidean_distance(a, b):
-    """Return the array of distances of two numpy arrays of points."""
-    return np.linalg.norm(a - b, axis=1)
-
-def network_distance(center, radius, domain):
-    """Return the array of circular distances of a network."""
-
-
-def get_neighbourhood(center, radix, domain):
-    """Get the range neighbourhood of given radix around a center index."""
-
-    # Impose an upper bound on the radix to prevent NaN and blocks
-    if radix < 1:
-        radix = 1
-
-    # Compute the circular network distance to the center
-    deltas = np.absolute(center - np.arange(domain))
-    distances = np.minimum(deltas, domain - deltas)
-
-    # Compute Gaussian distribution around the given center
-    return np.exp(-(distances*distances) / (2*(radix*radix)))
 
 if __name__ == '__main__':
     main()
