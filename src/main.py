@@ -1,7 +1,8 @@
 import numpy as np
 
 from io_helper import read_tsp, normalize
-from neuron import generate_network, get_neighborhood, select_winner
+from neuron import generate_network, get_neighborhood
+from distance import select_winner, euclidean_distance, route_distance
 from plot import plot_tsp
 
 def main():
@@ -16,6 +17,7 @@ def som(problem, iterations, learning_rate=0.7):
 
     # Obtain the normalized set of cities (w/ coord in [0,1])
     cities = problem.copy()
+
     cities[['x', 'y']] = normalize(cities[['x', 'y']])
 
     # TODO! add n as parameter

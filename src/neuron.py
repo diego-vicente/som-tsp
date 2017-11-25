@@ -8,14 +8,6 @@ def generate_network(size):
     """
     return np.random.rand(size, 2)
 
-def select_winner(network, city):
-    """Return the index of the closest neuron to a given city."""
-    return euclidean_distance(network, city).argmin()
-
-def euclidean_distance(a, b):
-    """Return the array of distances of two numpy arrays of points."""
-    return np.linalg.norm(a - b, axis=1)
-
 def get_neighborhood(center, radix, domain):
     """Get the range gaussian of given radix around a center index."""
 
