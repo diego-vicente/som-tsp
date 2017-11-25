@@ -3,14 +3,19 @@ import numpy as np
 from io_helper import read_tsp, normalize
 from neuron import generate_network, get_neighborhood, get_route
 from distance import select_closest, euclidean_distance, route_distance
-from plot import plot_tsp
+from plot import plot_network, plot_route
 
 def main():
     problem = read_tsp('assets/uy734.tsp')
 
-    route = som(problem, 10000)
+    route = som(problem, 1000)
+    print(route[:10])
 
-    print(route_distance(problem.reindex(route)))
+    print(problem)
+    problem = problem.reindex(route)
+    print(problem)
+
+    print(route_distance(problem))
 
     return
 
@@ -29,7 +34,7 @@ def som(problem, iterations, learning_rate=0.7):
     network = generate_network(n)
     print('Network of {} neurons created. Starting the iterations:'.format(n))
 
-    plot_tsp(cities, network, 'diagrams/before.png')
+    plot_network(cities, network, 'diagrams/before.png')
 
     for i in range(iterations):
         if not i % 100:
@@ -45,14 +50,15 @@ def som(problem, iterations, learning_rate=0.7):
         learning_rate = learning_rate * 0.9999
         n = n * 0.999
         if not i % 500:
-            plot_tsp(cities, network, 'diagrams/{}.png'.format(i))
+            plot_network(cities, network, 'diagrams/{}.png'.format(i))
         if n < 1:
             print('Radius has completely decayed, finishing execution at {} iterations'.format(i))
             break
 
-    plot_tsp(cities, network, 'diagrams/after.png')
+    plot_network(cities, network, 'diagrams/after.png')
 
     route = get_route(cities, network)
+    plot_route(cities, route, 'diagrams/route.png')
     return route
 
 if __name__ == '__main__':
