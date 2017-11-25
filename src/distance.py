@@ -1,8 +1,8 @@
 import numpy as np
 
-def select_winner(network, city):
-    """Return the index of the closest neuron to a given city."""
-    return euclidean_distance(network, city).argmin()
+def select_closest(candidates, origin):
+    """Return the index of the closest candidate to a given point."""
+    return euclidean_distance(candidates, origin).argmin()
 
 def euclidean_distance(a, b):
     """Return the array of distances of two numpy arrays of points."""

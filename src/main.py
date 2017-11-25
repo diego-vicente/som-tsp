@@ -1,14 +1,16 @@
 import numpy as np
 
 from io_helper import read_tsp, normalize
-from neuron import generate_network, get_neighborhood
-from distance import select_winner, euclidean_distance, route_distance
+from neuron import generate_network, get_neighborhood, get_route
+from distance import select_closest, euclidean_distance, route_distance
 from plot import plot_tsp
 
 def main():
     problem = read_tsp('assets/uy734.tsp')
 
     route = som(problem, 10000)
+
+    print(route_distance(problem.reindex(route)))
 
     return
 
@@ -34,7 +36,7 @@ def som(problem, iterations, learning_rate=0.7):
             print('\t> Iteration {}/{}'.format(i, iterations), end="\r")
         # Choose a random city
         city = cities.sample(1)[['x', 'y']].values
-        winner_idx = select_winner(network, city)
+        winner_idx = select_closest(network, city)
         # Generate a filter that applies changes to the winner's gaussian
         gaussian = get_neighborhood(winner_idx, n//10, network.shape[0])
         # Update the network's weights (closer to the city)
@@ -49,6 +51,9 @@ def som(problem, iterations, learning_rate=0.7):
             break
 
     plot_tsp(cities, network, 'diagrams/after.png')
+
+    route = get_route(cities, network)
+    return route
 
 if __name__ == '__main__':
     main()

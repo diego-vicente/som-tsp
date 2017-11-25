@@ -1,4 +1,7 @@
 import numpy as np
+from functools import partial
+
+from distance import select_closest
 
 def generate_network(size):
     """
@@ -21,3 +24,13 @@ def get_neighborhood(center, radix, domain):
 
     # Compute Gaussian distribution around the given center
     return np.exp(-(distances*distances) / (2*(radix*radix)))
+
+def get_route(cities, network):
+    """Return the route computed by a network."""
+    points = cities[['x', 'y']]
+    route = []
+    for neuron in network:
+        route.append(select_closest(points, neuron))
+    route = np.unique(np.array(route))
+
+    return route
