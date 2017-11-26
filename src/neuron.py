@@ -27,10 +27,8 @@ def get_neighborhood(center, radix, domain):
 
 def get_route(cities, network):
     """Return the route computed by a network."""
-    points = cities[['x', 'y']]
-    route = []
-    for neuron in network:
-        route.append(select_closest(points, neuron))
-    route = np.array(route)
-    _, idx = np.unique(route, return_index=True)
-    return route[np.sort(idx)]
+    cities['winner'] = cities[['x', 'y']].apply(
+        lambda c: select_closest(network, c),
+        axis=1, raw=True)
+
+    return cities.sort_values('winner').index
