@@ -9,17 +9,15 @@ def main():
     problem = read_tsp('assets/uy734.tsp')
 
     route = som(problem, 10000)
-    print(route[:10])
 
-    print(problem)
     problem = problem.reindex(route)
-    print(problem)
 
-    print(route_distance(problem))
+    distance = route_distance(problem)
 
-    return
+    print('Route found of length {}'.format(distance))
 
-def som(problem, iterations, learning_rate=0.7):
+
+def som(problem, iterations, learning_rate=0.8):
     """Solve the TSP using a Self-Organizing Map."""
 
     # Obtain the normalized set of cities (w/ coord in [0,1])
@@ -34,8 +32,6 @@ def som(problem, iterations, learning_rate=0.7):
     network = generate_network(n)
     print('Network of {} neurons created. Starting the iterations:'.format(n))
 
-    plot_network(cities, network, 'diagrams/before.png')
-
     for i in range(iterations):
         if not i % 100:
             print('\t> Iteration {}/{}'.format(i, iterations), end="\r")
@@ -47,15 +43,22 @@ def som(problem, iterations, learning_rate=0.7):
         # Update the network's weights (closer to the city)
         network += gaussian[:,np.newaxis] * learning_rate * (city - network)
         # Decay the variables
-        learning_rate = learning_rate * 0.9999
-        n = n * 0.999
+        learning_rate = learning_rate * 0.99995
+        n = n * 0.9995
         if not i % 500:
             plot_network(cities, network, 'diagrams/{}.png'.format(i))
         if n < 1:
-            print('Radius has completely decayed, finishing execution at {} iterations'.format(i))
+            print('Radius has completely decayed, finishing execution',
+            'at {} iterations'.format(i))
             break
+        if learning_rate < 0.001:
+            print('Learning rate has completely decayed, finishing execution',
+            'at {} iterations'.format(i))
+            break
+    else:
+        print('Completed {} iterations.'.format(iterations))
 
-    plot_network(cities, network, 'diagrams/after.png')
+    plot_network(cities, network, 'diagrams/final.png')
 
     route = get_route(cities, network)
     plot_route(cities, route, 'diagrams/route.png')
