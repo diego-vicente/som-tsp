@@ -6,8 +6,8 @@ def plot_network(cities, neurons, name):
     fig = plt.figure(figsize=(5, 5), frameon = False)
     axis = fig.add_axes([0,0,1,1])
 
-    axis.set_xlim([1.1,-.1])
-    axis.set_ylim([1.1,-.1])
+    # axis.set_xlim([1.1,-.1])
+    # axis.set_ylim([1.1,-.1])
     axis.set_aspect('equal', adjustable='datalim')
     plt.axis('off')
 
@@ -22,8 +22,8 @@ def plot_route(cities, route, name):
     fig = plt.figure(figsize=(5, 5), frameon = False)
     axis = fig.add_axes([0,0,1,1])
 
-    axis.set_xlim([1.1,-.1])
-    axis.set_ylim([1.1,-.1])
+    # axis.set_xlim([1.1,-.1])
+    # axis.set_ylim([1.1,-.1])
     axis.set_aspect('equal', adjustable='datalim')
     plt.axis('off')
 
