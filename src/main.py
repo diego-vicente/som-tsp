@@ -8,7 +8,7 @@ from plot import plot_network, plot_route
 def main():
     problem = read_tsp('assets/uy734.tsp')
 
-    route = som(problem, 1000)
+    route = som(problem, 10000)
     print(route[:10])
 
     print(problem)

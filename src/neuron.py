@@ -31,6 +31,6 @@ def get_route(cities, network):
     route = []
     for neuron in network:
         route.append(select_closest(points, neuron))
-    route = np.unique(np.array(route))
-
-    return route
+    route = np.array(route)
+    _, idx = np.unique(route, return_index=True)
+    return route[np.sort(idx)]
