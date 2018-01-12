@@ -1,0 +1,61 @@
+#+TITLE:  Self-Organizing Maps for solving the Travelling Salesman Problem
+#+AUTHOR: Diego Vicente Martín (=100317150@alumnos.uc3m.es=)
+#+EMAIL:  100317150@alumnos.uc3m.es
+#+LaTeX_CLASS: article
+#+LaTeX_CLASS_OPTIONS: [10pt]
+#+LaTeX_HEADER: \usepackage[export]{adjustbox}[2011/08/13]
+#+LATEX_HEADER: \setlength{\parskip}{\baselineskip}
+#+LATEX_HEADER: \usepackage{amsmath}
+
+#+OPTIONS: toc:nil date:nil H:2
+
+#+BEGIN_abstract
+Self-organizing maps (also known as Kohonen maps after its creator, Teuvo
+Kohonen) are an representation technique based on abstracting the data in a
+grid representation in order to obtain a low-dimensional version of the
+geometric relations in between. Using this technique, we are able to apply some
+slight modifications to the grid in order to solve the Travelling Salesman
+Problem and find sub-optimal solutions for it. In this report, there is an
+introduction to the concepts of the problem and the techniques used, as well as
+an evaluation of the Python representation.
+#+END_abstract
+
+* Summary of the original paper
+
+The original paper released by Teuvo Kohonen in 1998 cite:kohonen-1998-maps
+consists on a brief, masterful description of the technique. In there, it is
+explained that a /self-organizing map/ is described as an (usually
+two-dimensional) grid of nodes. Closely related to the map, is the idea of the
+/model/, that is, the real world observation the map is trying to represent.
+The purpose of the technique is to represent the model with a lower number of
+dimensions, while maintaining the relations of similarity of the nodes
+contained in it.
+
+To capture this similarity, the nodes in the map are spatially organized to be
+closer the more similar they are with each other. For that reason, SOM are a
+great way for pattern visualization and organization of data. To obtain this
+structure, the map is applied a regression operation to modify the nodes
+position in order update the nodes, one element from the model (\(e\)) at a
+time. The expression used for the regression is:
+
+\[
+n_{t+1} = n_{t} + h(w_{e}) \times \Delta(e, n_{t})
+\]
+
+This implies that the position of the node \(n\) is updated adding the distance
+from it to the winner node for a given element, \(w_{e}\), multiplied by its
+neighborhood factor. The /winner/ of an element is the more similar node in the
+map to it, usually measured by the closer node using the Euclidean distance
+(although it is possible to use a different similarity measure if appropriate).
+
+On the other side, the /neighborhood/ is defined as a convolution-like kernel
+for the map around the winner. Doing this, we are able to update the winner and
+the neurons nearby closer to the element, obtaining a soft and proportional
+result. The function is usually defined as a Gaussian distribution, but other
+implementations are as well. One worth mentioning is a bubble neighborhood,
+that updates the neurons that are within a radius of the winner.
+
+bibliography:~/Dropbox/org/bibliography/main.bib
+bibliographystyle:ieeetr
+
+#  LocalWords:  Teuvo Kohonen SOM
