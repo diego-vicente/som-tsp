@@ -5,6 +5,9 @@
 #+LaTeX_CLASS_OPTIONS: [10pt]
 #+LaTeX_HEADER: \usepackage[export]{adjustbox}[2011/08/13]
 #+LATEX_HEADER: \setlength{\parskip}{\baselineskip}
+#+LATEX_HEADER: \usepackage{enumitem}
+#+LATEX_HEADER: \setlist[itemize]{noitemsep,
+#+LATEX_HEADER:     topsep=0pt, before={\vspace*{-0.7\baselineskip}}}
 #+LATEX_HEADER: \usepackage{amsmath}
 
 #+OPTIONS: toc:nil date:nil H:2
@@ -114,6 +117,43 @@ This expression is indeed quite similar to that of Q-Learning, and the
 convergence is search in a similar fashion to this technique. Decaying the
 parameters can be useful in unsupervised learning tasks like the aforementioned
 ones.
+
+Finally, to obtain the route from the SOM, it is only necessary to associate a
+city with its winner neuron, traverse the ring starting from any point and sort
+the cities by order of appearance of their winner neuron in the ring. As it is
+stated in cite:brocki-2010-somtsp, if several cities map to the same neuron, it
+is because the order of traversing such cities have not been contemplated by
+the SOM (due to lack of relevance for the final distance or because of not
+enough precision). In that case, any possible ordered can be considered for
+such cities.
+
+** Implementation
+
+For the task, an implementation of the previously explained technique is
+provided in Python 3. It is able to parse and load any 2D instance problem
+modelled as a =TSPLIB= file and run the regression to obtain the shortest
+route. This format is chosen because for the testing and evaluation of the
+solution the problems in the National Traveling Salesman Problem instances
+offered by the University of Waterloo.
+
+All the functionalities of the implementation are collected in several files
+included in the =src= directory:
+- =distance.py=: contains the 2-Dimensional (Euclidean) distance functions,
+  as well as other related functions for computing and evaluating distances.
+- =io_helper.py=: functions to open =.tsp= files and load them into valid
+  runtime objects.
+- =main.py=: includes the general execution control of the self-organizing map.
+- =neuron.py=: includes all the network generation, neighborhood computation
+  and route computation functions.
+- =plot.py=: some functions to generate graphical representations of different
+  snapshots during and after the execution.
+
+On a lower level, the =numpy= package was used for the computations, which
+enables vectorization of the computations and higher performance in the
+execution, as well as more expressive and concise code. =pandas= is used for
+loading the =.tsp= files to memory easily, and =matplotlib= is used to plot the
+graphical representation. These dependencies are all included in the Anaconda
+distribution of Python, or can be easily installed using =pip=.
 
 bibliography:~/Dropbox/org/bibliography/main.bib
 bibliographystyle:ieeetr
