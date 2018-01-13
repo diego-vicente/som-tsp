@@ -155,6 +155,58 @@ loading the =.tsp= files to memory easily, and =matplotlib= is used to plot the
 graphical representation. These dependencies are all included in the Anaconda
 distribution of Python, or can be easily installed using =pip=.
 
+* Evaluation
+
+To evaluate the implementation, we will use some instances provided by the
+National Traveling Salesman Problem library. These instances are inspired in
+real countries and also include the optimal route for most of them, which is a
+key part of our evaluation. The evaluation strategy consists in running several
+instances of the problem and study some metrics:
+- *Execution time* invested by the technique to find a solution.
+- *Quality* of the solution, measured in function of the optimal route: a route
+  that we say is "10% longer that the optimal route" is exactly 1.1 times the
+  length of the optimal one.
+
+The parameters used in the evaluation are the ones found by parametrization of
+the technique, by using the ones provided in cite:brocki-2010-somtsp as a
+starting point. These parameters are:
+- A population size of 8 times the cities in the problem.
+- An initial learning rate of 0.8, with a discount rate of 0.9995.
+- An initial neighbourhood of the number of cities, decayed by 0.9995.
+
+These parameters were applied to the following instances:
+- *Qatar*, containing 194 cities with an optimal tour of 9352.
+- *Uruguay*, containing 734 cities with an optimal tour of 79114.
+- *Italy*, containing 16862 cities with an optimal tour of 557315.
+
+The implementation also stops the execution if some of the variables decays
+under the useful threshold, for that reason, along with the results of the
+evaluation, there is also an iterations count provided. The following table
+gathers the evaluation results, with the average result of 5 executions in each
+of the instances.
+
+| Instance | Iterations | Time (s) |    Length | Quality |
+|----------+------------+----------+-----------+---------|
+| Qatar    |      14690 |     14.3 |  10233.89 |    9.4% |
+| Uruguay  |      17351 |     23.4 |  85622.49 |    8.2% |
+| Italy    |      23618 |    193.1 | 736213.11 |   32.1% |
+
+We can see how the time consumption is directly related to the number of
+cities, since the complexity of finding the closest neuron of a city depends
+on the population to traverse to find it. It is possible to obtain better
+results in the large set of cities, but for time constraints it is usually
+cropped in a 32% longer than the optimal. In the other two cases, it is
+interesting to see how a better quality is obtained in Uruguay even the problem
+is harder, due to the topography of the country.
+
+#+CAPTION: Three different steps of execution of the Uruguay instance.
+#+ATTR_LATEX: :width 1.3\textwidth,center
+[[./img/uruguay.png]]
+
+However, the results are overall acceptable, except in extremely demanding
+settings for the TSP. We can see how in less than half a minute, a suboptimal
+route crossing more than 700 cities is found.
+
 bibliography:~/Dropbox/org/bibliography/main.bib
 bibliographystyle:ieeetr
 
