@@ -1,4 +1,4 @@
-#+TITLE:  Self-Organizing Maps for solving the Travelling Salesman Problem
+#+TITLE:  Self-Organizing Maps for solving the Traveling Salesman Problem
 #+AUTHOR: Diego Vicente Martín (=100317150@alumnos.uc3m.es=)
 #+EMAIL:  100317150@alumnos.uc3m.es
 #+LaTeX_CLASS: article
@@ -14,7 +14,7 @@ Self-organizing maps (also known as Kohonen maps after its creator, Teuvo
 Kohonen) are an representation technique based on abstracting the data in a
 grid representation in order to obtain a low-dimensional version of the
 geometric relations in between. Using this technique, we are able to apply some
-slight modifications to the grid in order to solve the Travelling Salesman
+slight modifications to the grid in order to solve the Traveling Salesman
 Problem and find sub-optimal solutions for it. In this report, there is an
 introduction to the concepts of the problem and the techniques used, as well as
 an evaluation of the Python representation.
@@ -43,9 +43,9 @@ n_{t+1} = n_{t} + h(w_{e}) \times \Delta(e, n_{t})
 \]
 
 This implies that the position of the node \(n\) is updated adding the distance
-from it to the winner node for a given element, \(w_{e}\), multiplied by its
-neighborhood factor. The /winner/ of an element is the more similar node in the
-map to it, usually measured by the closer node using the Euclidean distance
+from it to the given element, multiplied by the neighborhood factor of the
+winner neuron, \(w_{e}\). The /winner/ of an element is the more similar node in
+the map to it, usually measured by the closer node using the Euclidean distance
 (although it is possible to use a different similarity measure if appropriate).
 
 On the other side, the /neighborhood/ is defined as a convolution-like kernel
@@ -53,9 +53,69 @@ for the map around the winner. Doing this, we are able to update the winner and
 the neurons nearby closer to the element, obtaining a soft and proportional
 result. The function is usually defined as a Gaussian distribution, but other
 implementations are as well. One worth mentioning is a bubble neighborhood,
-that updates the neurons that are within a radius of the winner.
+that updates the neurons that are within a radius of the winner (based on a
+discrete Kronecker delta function).
+
+After this presentation to the technique, the paper suggest several nuances for
+the implementation that can be useful: using eigenvectors as initialization
+positions for the model instead of random, using Voronoi regions to speed up
+the computation of neighborhoods, and how to apply learning vector quantization
+for discrete classes in the sample vector. Finally, the last remark is the
+suggestion of using a hexagonal grid when using SOM to create a similarity
+graph or visualization.
+
+* Using SOM to solve the Traveling Salesman Problem
+
+The Traveling Salesman Problem (TSP) is an NP-Complete problem consisting of
+finding the shortest (or, in case of having defined costs, the cheapest) route
+that traverses all the cities given in a problem exactly once, with or without
+coming back to the initial point cite:hoffman-2013-tsp.
+
+In this work, the solution proposed uses some slight modifications on the
+concept of self-organizing maps to use them as a tool to solve the problem.
+Most of the modifications are inspired by cite:angeniol-1988-somtsp and some of
+the parametrization techniques are studied in cite:brocki-2010-somtsp.
+
+** Modifying the algorithm
+
+To use the network to solve the TSP, there main concept to understand is how to
+modify the neighborhood function. If instead of a grid we declare a /circular
+array of neurons/, each node will only be conscious of the neurons in front of
+it and behind. That is, the similarity will work just in one dimension. Making
+this slight modification, the self-organizing map will behave as an elastic
+ring, getting closer to the cities but trying to minimize the perimeter of it
+thanks to the neighborhood function.
+
+Although this modification is the main idea behind the technique, it will not
+work as is: the algorithm will hardly converge any of the times. To ensure the
+convergence of it, we can include a learning rate, \alpha, to control the
+exploration and exploitation of the algorithm. To obtain high exploration
+first, and high exploitation after that in the execution, we must include
+/decay/ in both the neighborhood function and the learning rate. Decaying the
+learning rate will ensure less aggressive displacement of the neurons around
+the model, and decaying the neighborhood will result in a more moderate
+exploitation of the local minima of each part of the model. Then, our
+regression can be expressed as:
+
+\[
+n_{t+1} = n_{t} + \alpha_{t} \cdot g(w_{e}, h_{t}) \cdot \Delta(e, n_{t})
+\]
+
+Where \alpha is the learning rate at a given time, and \(g\) is the Gaussian
+function centered in a winner and with a neighborhood dispersion of \(h\). The
+decay function consists on simply multiplying the two given discounts, \gamma, for
+the learning rate and the neighborhood distance.
+
+\[
+\alpha_{t+1} = \gamma_{\alpha} \cdot \alpha_{t} , \ \ h_{t+1} = \gamma_{h} \cdot h_{t}
+\]
+
+This expression is indeed quite similar to that of Q-Learning, and the
+convergence is search in a similar fashion to this technique. Decaying the
+parameters can be useful in unsupervised learning tasks like the aforementioned
+ones.
 
 bibliography:~/Dropbox/org/bibliography/main.bib
 bibliographystyle:ieeetr
 
-#  LocalWords:  Teuvo Kohonen SOM
+#  LocalWords:  Teuvo Kohonen SOM eigenvectors Voronoi parametrization minima
