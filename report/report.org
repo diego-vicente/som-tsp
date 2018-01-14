@@ -177,6 +177,7 @@ starting point. These parameters are:
 These parameters were applied to the following instances:
 - *Qatar*, containing 194 cities with an optimal tour of 9352.
 - *Uruguay*, containing 734 cities with an optimal tour of 79114.
+- *Finland*, containing 10639 cities with an optimal tour of 520527.
 - *Italy*, containing 16862 cities with an optimal tour of 557315.
 
 The implementation also stops the execution if some of the variables decays
@@ -188,16 +189,17 @@ executions in each of the instances.
 | Instance | Iterations | Time (s) |    Length | Quality |
 |----------+------------+----------+-----------+---------|
 | Qatar    |      14690 |     14.3 |  10233.89 |    9.4% |
-| Uruguay  |      17351 |     23.4 |  85622.49 |    8.2% |
-| Italy    |      23618 |    193.1 | 736213.11 |   32.1% |
+| Uruguay  |      17351 |     23.4 |  85072.35 |    7.5% |
+| Finland  |      37833 |    284.0 | 636580.27 |   22.3% |
+| Italy    |      39368 |    401.1 | 723212.87 |   29.7% |
 
 We can see how the time consumption is directly related to the number of
-cities, since the complexity of finding the closest neuron of a city depends
-on the population to traverse to find it. It is possible to obtain better
-results in the large set of cities, but for time constraints it is usually
-cropped in a 32% longer than the optimal. In the other two cases, it is
-interesting to see how a better quality is obtained in Uruguay even the problem
-is harder, due to the topography of the country.
+cities, since the complexity of finding the closest neuron of a city depends on
+the population to traverse to find it. It is possible to obtain better results
+in the large set of cities, but for time constraints it is usually cropped
+shorter. The results are never 30% longer than the optimal. In the other
+shorter cases, it is interesting to see how a better quality is obtained in
+Uruguay even the problem is harder, due to the topography of the country.
 
 #+CAPTION: Three different steps of execution of the Uruguay instance.
 #+ATTR_LATEX: :width 1.3\textwidth,center
