@@ -1,4 +1,8 @@
 import numpy as np
+import matplotlib.pyplot as plt
+import matplotlib as mpl
+
+from sys import argv
 
 from io_helper import read_tsp, normalize
 from neuron import generate_network, get_neighborhood, get_route
@@ -6,9 +10,13 @@ from distance import select_closest, euclidean_distance, route_distance
 from plot import plot_network, plot_route
 
 def main():
-    problem = read_tsp('assets/uy734.tsp')
+    if len(argv) != 2:
+        print("Correct use: python src/main.py <filename>.tsp")
+        return -1
 
-    route = som(problem, 10000)
+    problem = read_tsp(argv[1])
+
+    route = som(problem, 100000)
 
     problem = problem.reindex(route)
 
@@ -25,7 +33,7 @@ def som(problem, iterations, learning_rate=0.8):
 
     cities[['x', 'y']] = normalize(cities[['x', 'y']])
 
-    # TODO! add n as parameter
+    # The population size is 8 times the number of cities
     n = cities.shape[0] * 8
 
     # Generate an adequate network of neurons:
@@ -43,10 +51,14 @@ def som(problem, iterations, learning_rate=0.8):
         # Update the network's weights (closer to the city)
         network += gaussian[:,np.newaxis] * learning_rate * (city - network)
         # Decay the variables
-        learning_rate = learning_rate * 0.99995
-        n = n * 0.9995
-        if not i % 500:
-            plot_network(cities, network, 'diagrams/{}.png'.format(i))
+        learning_rate = learning_rate * 0.99997
+        n = n * 0.9997
+
+        # Check for plotting interval
+        if not i % 5000:
+            plot_network(cities, network, name='diagrams/{}.png'.format(i))
+
+        # Check if any parameter has completely decayed.
         if n < 1:
             print('Radius has completely decayed, finishing execution',
             'at {} iterations'.format(i))
@@ -58,7 +70,7 @@ def som(problem, iterations, learning_rate=0.8):
     else:
         print('Completed {} iterations.'.format(iterations))
 
-    plot_network(cities, network, 'diagrams/final.png')
+    plot_network(cities, network, name='diagrams/final.png')
 
     route = get_route(cities, network)
     plot_route(cities, route, 'diagrams/route.png')
