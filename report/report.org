@@ -203,9 +203,34 @@ is harder, due to the topography of the country.
 #+ATTR_LATEX: :width 1.3\textwidth,center
 [[./img/uruguay.png]]
 
-However, the results are overall acceptable, except in extremely demanding
-settings for the TSP. We can see how in less than half a minute, a suboptimal
-route crossing more than 700 cities is found.
+It is possible to see in the graphical representation of the executions how the
+technique finds its way: first starting as an elastic, fast changing ring
+trying to adapt to its shorter form possible, and then starting to fix its
+position to find better local ways inside of it. For that purpose, a great
+number of neurons are added to the network and the parameters are decayed, to
+ensure that first exploration is used and then local exploitation is performed
+to refine the solution.
+
+#+CAPTION: Three different steps of execution of the Italy instance.
+#+ATTR_LATEX: :width 1.3\textwidth,center
+[[./img/italy.png]]
+
+The results are overall acceptable, except in extremely demanding settings for
+the TSP. We can see how in less than half a minute, a suboptimal route crossing
+more than 700 cities is found.
+
+* Conclusions
+
+The experiment show a really interesting way to use an organization technique
+like the self-organizing maps to find sub-optimal solutions for an NP-Complete
+problem like the traveling salesman problem. By modifying the technique used to
+find similarity, we are able to create a network that organizes the cities in
+the one of the shortest routes possible. Even though the technique is sensible
+to parametrization and may need to run for a great number of iterations in the
+biggest instances provided, the results are satisfactory and inspiring to find
+new uses in well-known, established techniques.
+
+#+LATEX: \newpage
 
 bibliography:~/Dropbox/org/bibliography/main.bib
 bibliographystyle:ieeetr
