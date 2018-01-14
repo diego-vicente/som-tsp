@@ -1,0 +1,150 @@
+#+TITLE:  Self-Organizing Maps para resolver Traveling Salesman Problem
+#+AUTHOR: Diego Vicente Martín (=100317150@alumnos.uc3m.es=)
+#+EMAIL:  100317150@alumnos.uc3m.es
+#+DATE:   15 de enero, 2018
+#+STARTUP: beamer
+#+OPTIONS: H:2
+#+LaTeX_CLASS: beamer
+#+BEAMER_FRAME_LEVEL: 2
+#+LANGUAGE: es
+#+LaTeX_HEADER: \usepackage[export]{adjustbox}[2011/08/13]
+#+LaTeX_HEADER: \usepackage[spanish]{babel}
+
+* Resumen del artículo original
+
+** Introducción
+
+- *Self-organizing maps*: estudiados por cite:kohonen-1998-maps
+  - Técnica de organización y visualización inspirada en ANNs.
+  - Simula un modelo dado a través de una regresión en una red.
+  - Se /auto-organiza/ para poner cerca entre sí nodos que representan partes
+    similares.
+
+#+ATTR_LATEX: :width 0.8\textwidth
+[[./img/finnish_som.png]]
+
+** Regresión al modelo
+
+- Las neuronas del SOM se organizan espacialmente para juntar nodos similares.
+- La regresión se realiza elemento por elemento del modelo:
+
+\[
+n_{t+1} = n_{t} + h(w_{e}) \cdot \Delta(e, n_{t})
+\]
+
+  - \(n_{i}\) :: neurona en el momento \(i\).
+  - \(w_{e}\) :: neurona ganadora del elemento.
+  - \(h(n)\) :: factor de vecindario de una neurona \(n\).
+  - \(\Delta(x, y)\) :: vector de distancia entre \(x\) e \(y\)
+
+** Definiendo conceptos
+
+- La elección del *ganador* se define por similitud:
+  - El ejemplo más cercano usando la distancia euclídea.
+  - Las dos distribuciones con mayor correlación.
+  - Elemento de mayor heurística.
+
+- El vecindario actúa como un filtro de convolución.
+  - Un filtro de suavizado (normalmente Gaussiano).
+  - Se encarga de actualizar zonas concretas del mapa.
+
+** Otras cosas a tener en cuenta
+
+- La conectividad de la red puede cambiar
+  - No solo una red rectangular, sino hexagonal, octogonal...
+
+- El modelo no siempre converge si los parámetros no son correctos.
+
+- Si se usa como un LVQ, se pueden aplicar regiones de Voronoi.
+
+* Modificando SOM para resolver TSP
+
+** Usando SOM para resolver TSP
+
+- Si usamos una conectividad 2 (1D) en el mapa, la red es un anillo.
+  - Las neuronas intentarán reducir la distancia con su sucesor y predecesor.
+  - Aún así, se aplicará una regresión al modelo.
+
+- Usando un mapa para resolver un TSP en 2D:
+  - Similitud: distancia euclídea.
+  - Conectividad de una dimensión (circular).
+  - Vecindario: filtro Gaussiano de 1D.
+
+** Otras modificaciones
+
+- El mapa no siempre converge, hace falta una forma de equilibrar la
+  exploración y la explotación del modelo.
+- Solución: introducción factor de aprendizaje (\alpha) y descuentos en el factor de
+  aprendizaje y el tamaño del vecindario.
+  - Reducir el factor de aprendizaje permite forzar la convergencia.
+  - Reducir el vecindario fuerza la exploración primero para luego explotar
+    zonas más locales.
+
+\[
+n_{t+1} = n_{t} + \alpha_{t} \cdot g(w_{e}, h_{t}) \cdot \Delta(e, n_{t})
+\]
+
+
+\[
+\alpha_{t+1} = \gamma_{\alpha} \cdot \alpha_{t} , \ \ h_{t+1} = \gamma_{h} \cdot h_{t}
+\]
+
+
+* Implementación y evaluación
+
+** Implementación
+
+- Python 3 y =numpy= para la vectorización de operaciones en el mapa.
+- Parámetros configurables, valores elegidos por defecto basados en
+  cite:brocki-2010-somtsp:
+  - Tamaño de la red: 8 veces el número de ciudades.
+  - \alpha = 0.8, \gamma_{\alpha} = 0.99997
+  - h = número de ciudades, \gamma_{h}= 0.9997
+
+** Evaluación
+
+- Métricas:
+  - Calidad de la solución en función de la óptima.
+  - Tiempo consumido hasta devolver una solución.
+
+** Resultados
+
+- Pruebas del mapa en 3 países:
+  - Qatar, con 194 ciudades.
+  - Uruguay, con 734 ciudades.
+  - Filandia, con 10639 ciudades.
+  - Italia, con 16862 ciudades.
+
+| Instancia | Iteraciones | Tiempo (s) |  Longitud | Calidad |
+|-----------+-------------+------------+-----------+---------|
+| Qatar     |       14690 |       14.3 |  10233.89 |    9.4% |
+| Uruguay   |       17351 |       23.4 |  85072.35 |    7.5% |
+| Finlandia |       37833 |      284.0 | 636580.27 |   22.3% |
+| Italia    |       39368 |      401.1 | 723212.87 |   29.7% |
+
+** Visualización: Uruguay
+
+#+ATTR_LATEX: :width 1.2\textwidth,center
+[[./img/uruguay.png]]
+
+
+** Visualización: Italia
+
+#+ATTR_LATEX: :width 1.2\textwidth,center
+[[./img/italy.png]]
+
+
+* Conclusiones
+
+** Conclusiones
+
+- SOM es una técnica muy interesante que ofrece buenos resultados
+- Potente herramiento para la visualización
+- Aplicar SOM al TSP resulta en una técnica muy sensible a los parámetros.
+- Es posible encontrar una ruta subóptima en menos de 25 segundos para más de
+  700 ciudades.
+
+** Referencias
+
+bibliography:~/Dropbox/org/bibliography/main.bib
+bibliographystyle:apalike
