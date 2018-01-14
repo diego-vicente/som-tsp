@@ -28,11 +28,11 @@ an evaluation of the Python representation.
 The original paper released by Teuvo Kohonen in 1998 cite:kohonen-1998-maps
 consists on a brief, masterful description of the technique. In there, it is
 explained that a /self-organizing map/ is described as an (usually
-two-dimensional) grid of nodes. Closely related to the map, is the idea of the
-/model/, that is, the real world observation the map is trying to represent.
-The purpose of the technique is to represent the model with a lower number of
-dimensions, while maintaining the relations of similarity of the nodes
-contained in it.
+two-dimensional) grid of nodes, inspired in a neural network. Closely related
+to the map, is the idea of the /model/, that is, the real world observation the
+map is trying to represent. The purpose of the technique is to represent the
+model with a lower number of dimensions, while maintaining the relations of
+similarity of the nodes contained in it.
 
 To capture this similarity, the nodes in the map are spatially organized to be
 closer the more similar they are with each other. For that reason, SOM are a
@@ -42,7 +42,7 @@ position in order update the nodes, one element from the model (\(e\)) at a
 time. The expression used for the regression is:
 
 \[
-n_{t+1} = n_{t} + h(w_{e}) \times \Delta(e, n_{t})
+n_{t+1} = n_{t} + h(w_{e}) \cdot \Delta(e, n_{t})
 \]
 
 This implies that the position of the node \(n\) is updated adding the distance
@@ -171,8 +171,8 @@ The parameters used in the evaluation are the ones found by parametrization of
 the technique, by using the ones provided in cite:brocki-2010-somtsp as a
 starting point. These parameters are:
 - A population size of 8 times the cities in the problem.
-- An initial learning rate of 0.8, with a discount rate of 0.9995.
-- An initial neighbourhood of the number of cities, decayed by 0.9995.
+- An initial learning rate of 0.8, with a discount rate of 0.99997.
+- An initial neighbourhood of the number of cities, decayed by 0.9997.
 
 These parameters were applied to the following instances:
 - *Qatar*, containing 194 cities with an optimal tour of 9352.
@@ -180,10 +180,10 @@ These parameters were applied to the following instances:
 - *Italy*, containing 16862 cities with an optimal tour of 557315.
 
 The implementation also stops the execution if some of the variables decays
-under the useful threshold, for that reason, along with the results of the
-evaluation, there is also an iterations count provided. The following table
-gathers the evaluation results, with the average result of 5 executions in each
-of the instances.
+under the useful threshold. An uniform way of running the algorithm is tested,
+although a finer grained parameters can be found for each instance. The
+following table gathers the evaluation results, with the average result of 5
+executions in each of the instances.
 
 | Instance | Iterations | Time (s) |    Length | Quality |
 |----------+------------+----------+-----------+---------|
