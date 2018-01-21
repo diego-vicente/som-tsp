@@ -89,7 +89,6 @@ n_{t+1} = n_{t} + \alpha_{t} \cdot g(w_{e}, h_{t}) \cdot \Delta(e, n_{t})
 \alpha_{t+1} = \gamma_{\alpha} \cdot \alpha_{t} , \ \ h_{t+1} = \gamma_{h} \cdot h_{t}
 \]
 
-
 * Implementación y evaluación
 
 ** Implementación
@@ -132,7 +131,6 @@ n_{t+1} = n_{t} + \alpha_{t} \cdot g(w_{e}, h_{t}) \cdot \Delta(e, n_{t})
 
 #+ATTR_LATEX: :width 1.2\textwidth,center
 [[./img/italy.png]]
-
 
 * Conclusiones
 
