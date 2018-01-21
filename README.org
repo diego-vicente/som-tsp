@@ -1,4 +1,4 @@
-#+TITLE:  Solving the Travelling Salesman Problem using Self-Organizing Maps
+#+TITLE:  Solving the Traveling Salesman Problem using Self-Organizing Maps
 #+AUTHOR: Diego Vicente Martín
 #+EMAIL:  mail@diego.codes
 
