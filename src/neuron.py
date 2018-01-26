@@ -1,5 +1,4 @@
 import numpy as np
-from functools import partial
 
 from distance import select_closest
 
