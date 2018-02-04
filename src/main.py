@@ -1,8 +1,6 @@
-import numpy as np
-import matplotlib.pyplot as plt
-import matplotlib as mpl
-
 from sys import argv
+
+import numpy as np
 
 from io_helper import read_tsp, normalize
 from neuron import generate_network, get_neighborhood, get_route
