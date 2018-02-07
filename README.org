@@ -8,7 +8,7 @@ instances of the problems that the program supports are =.tsp= files, which is
 a widespread format in this problem. All the source code can be found in the
 =src= directory, while a report and brief presentation slides (in Spanish) can
 be found in the =report= folder. However, for a complete read on the topic, you
-can read [[http://www.math.uwaterloo.ca/tsp/world/countries.html][my blog post explaining this implementation and its evaluation]].
+can read [[https://diego.codes/post/som-tsp/][my blog post explaining this implementation and its evaluation]].
 
 [[file:diagrams/uruguay.gif]]
 
