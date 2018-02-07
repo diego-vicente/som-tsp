@@ -13,8 +13,14 @@ can read [[http://www.math.uwaterloo.ca/tsp/world/countries.html][my blog post e
 [[file:diagrams/uruguay.gif]]
 
 To run the code, only Python 3 and the dependencies (=matplotlib=, =numpy= and =pandas=,
-which are included in the Anaconda distribution by default) are needed. To run
-the code, simply execute:
+which are included in the Anaconda distribution by default) are needed. In case
+you are not using Anaconda, you can install all the dependencies with:
+
+#+BEGIN_SRC sh
+pip install requirements.txt
+#+END_SRC
+
+To run the code, simply execute:
 
 #+BEGIN_SRC sh
 cd som-tsp
