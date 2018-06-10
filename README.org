@@ -17,7 +17,7 @@ which are included in the Anaconda distribution by default) are needed. In case
 you are not using Anaconda, you can install all the dependencies with:
 
 #+BEGIN_SRC sh
-pip install requirements.txt
+pip install -r requirements.txt
 #+END_SRC
 
 To run the code, simply execute:
