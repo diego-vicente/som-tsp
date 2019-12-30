@@ -1,3 +1,12 @@
+Changes by Y-Shy@Github：
+* A ch34.tsp data file was added: 34 cities from china. Hong Kong, Macao, Taipei, Haikou included 
+* Changes in ./src/main.py
+  * Argv related lines were deleted
+  * File pathes were modified
+* Changes in ./src/plot.py
+  Linewidth and marksize were enlarged so that you would get a clearer figure if you wanted to print it.
+  
+
 #+TITLE:  Solving the Traveling Salesman Problem using Self-Organizing Maps
 #+AUTHOR: Diego Vicente Martín
 #+EMAIL:  mail@diego.codes
