@@ -2,13 +2,13 @@
 #+AUTHOR: Diego Vicente Martín
 #+EMAIL:  mail@diego.codes
 
-Changes by Y-Shy@Github：
-* A ch34.tsp data file was added: 34 cities from china. Hong Kong, Macao, Taipei, Haikou included 
-* Changes in ./src/main.py
-  * Argv related lines were deleted
-  * File pathes were modified
-* Changes in ./src/plot.py
-  Linewidth and marksize were enlarged so that you would get a clearer figure if you wanted to print it.
+* Changes by Y-Shy@Github：
+ * A ch34.tsp data file was added: 34 cities from china. Hong Kong, Macao, Taipei, Haikou included 
+ * Changes in ./src/main.py
+   * Argv related lines were deleted
+   * File pathes were modified
+ * Changes in ./src/plot.py
+   Linewidth and marksize were enlarged so that you would get a clearer figure if you wanted to print it.
   
 This repository contains an implementation of a Self Organizing Map that can be
 used to find sub-optimal solutions for the Traveling Salesman Problem. The
