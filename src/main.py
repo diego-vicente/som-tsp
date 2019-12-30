@@ -1,4 +1,5 @@
-from sys import argv
+# Modified by Github: Y-Shy
+# 20191230
 
 import numpy as np
 
@@ -8,19 +9,14 @@ from distance import select_closest, euclidean_distance, route_distance
 from plot import plot_network, plot_route
 
 def main():
-    if len(argv) != 2:
-        print("Correct use: python src/main.py <filename>.tsp")
-        return -1
-
-    problem = read_tsp(argv[1])
-
+    file_argv = r'../assets/ch34.tsp'  # 34 cities in China
+    problem = read_tsp(file_argv)
     route = som(problem, 100000)
-
     problem = problem.reindex(route)
-
     distance = route_distance(problem)
 
     print('Route found of length {}'.format(distance))
+
 
 
 def som(problem, iterations, learning_rate=0.8):
@@ -28,10 +24,9 @@ def som(problem, iterations, learning_rate=0.8):
 
     # Obtain the normalized set of cities (w/ coord in [0,1])
     cities = problem.copy()
-
     cities[['x', 'y']] = normalize(cities[['x', 'y']])
 
-    # The population size is 8 times the number of cities
+    # Generate an adequate network of neurons:
     n = cities.shape[0] * 8
 
     # Generate an adequate network of neurons:
@@ -54,7 +49,7 @@ def som(problem, iterations, learning_rate=0.8):
 
         # Check for plotting interval
         if not i % 1000:
-            plot_network(cities, network, name='diagrams/{:05d}.png'.format(i))
+            plot_network(cities, network, name='../diagrams/{:05d}.png'.format(i))
 
         # Check if any parameter has completely decayed.
         if n < 1:
@@ -68,10 +63,10 @@ def som(problem, iterations, learning_rate=0.8):
     else:
         print('Completed {} iterations.'.format(iterations))
 
-    plot_network(cities, network, name='diagrams/final.png')
+    plot_network(cities, network, name='../diagrams/final.png')
 
     route = get_route(cities, network)
-    plot_route(cities, route, 'diagrams/route.png')
+    plot_route(cities, route, '../diagrams/route.png')
     return route
 
 if __name__ == '__main__':
