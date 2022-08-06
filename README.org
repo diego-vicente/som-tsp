@@ -24,7 +24,8 @@ To run the code, simply execute:
 
 #+BEGIN_SRC sh
 cd som-tsp
-python src/main.py assets/<instance>.tsp
+pip install -e .
+som-tsp assets/<instance>.tsp
 #+END_SRC
 
 The images generated will be stored in the =diagrams= folder. Using a tool like

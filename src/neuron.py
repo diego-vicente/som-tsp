@@ -1,6 +1,6 @@
 import numpy as np
 
-from distance import select_closest
+from src.distance import select_closest
 
 def generate_network(size):
     """

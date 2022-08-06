@@ -2,17 +2,17 @@ from sys import argv
 
 import numpy as np
 
-from io_helper import read_tsp, normalize
-from neuron import generate_network, get_neighborhood, get_route
-from distance import select_closest, euclidean_distance, route_distance
-from plot import plot_network, plot_route
+from src.io_helper import read_tsp, normalize
+from src.neuron import generate_network, get_neighborhood, get_route
+from src.distance import select_closest, euclidean_distance, route_distance
+from src.plot import plot_network, plot_route
 
 def main():
-    if len(argv) != 2:
-        print("Correct use: python src/main.py <filename>.tsp")
+    if len(argv) < 1:
+        print("Correct use: som-tsp <filename>.tsp")
         return -1
 
-    problem = read_tsp(argv[1])
+    problem = read_tsp(argv[-1])
 
     route = som(problem, 100000)
 
