@@ -49,8 +49,8 @@ def som(problem, iterations, learning_rate=0.8):
         # Update the network's weights (closer to the city)
         network += gaussian[:,np.newaxis] * learning_rate * (city - network)
         # Decay the variables
-        learning_rate = learning_rate * 0.99997
-        n = n * 0.9997
+        learning_rate *= 0.99997
+        n *= 0.9997
 
         # Check for plotting interval
         if not i % 1000:
