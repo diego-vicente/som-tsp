@@ -1,5 +1,6 @@
 import pandas as pd
 import numpy as np
+from sklearn.preprocessing import MinMaxScaler
 
 def read_tsp(filename):
     """
@@ -50,7 +51,4 @@ def normalize(points):
     initial offset and normalizing the points in a proportional interval: [0,1]
     on y, maintining the original ratio on x.
     """
-    ratio = (points.x.max() - points.x.min()) / (points.y.max() - points.y.min()), 1
-    ratio = np.array(ratio) / max(ratio)
-    norm = points.apply(lambda c: (c - c.min()) / (c.max() - c.min()))
-    return norm.apply(lambda p: ratio * p, axis=1)
+    return MinMaxScaler((0, 1)).fit_transform(points)
